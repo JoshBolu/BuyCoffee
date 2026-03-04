@@ -1,17 +1,43 @@
-<Doctype html>
-  <html>
-    <head>
-      <title>Buy me a coffee</title>
-    </head>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Me A Coffee</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="orb orb-one" aria-hidden="true"></div>
+    <div class="orb orb-two" aria-hidden="true"></div>
 
-    <body>
-      <button id="connectButton">Connect</button>
-      <button id="balanceButton">Get Balance</button>
-      <!-- Form --  "buy coffee" or "fund" -->
-      <label for="ethAmount">ETH Amunt</label>
-      <input type="text" id="ethAmount" placeholder="0.1" />
-      <button type="button" id="fundButton">Buy Coffee</button>
-    </body>
+    <main class="app">
+      <p class="eyebrow">web3 sandbox</p>
+      <h1>Buy Me A Coffee</h1>
+      <p class="subtitle">
+        Connect your wallet, fund the contract with ETH, check contract balance,
+        and test owner-only withdrawal behavior.
+      </p>
 
-    <script src="./index.js" type="module"></script></html
-></Doctype>
+      <section class="controls" aria-label="Contract controls">
+        <div class="row row-two">
+          <button id="connectButton" type="button">Connect Wallet</button>
+          <button id="balanceButton" type="button">Get Balance</button>
+        </div>
+
+        <div class="field">
+          <label for="ethAmount">ETH Amount</label>
+          <input type="text" id="ethAmount" placeholder="0.1" inputmode="decimal" />
+        </div>
+
+        <div class="row row-two">
+          <button id="fundButton" type="button">Buy Coffee</button>
+          <button id="withdrawButton" type="button">Withdraw</button>
+        </div>
+      </section>
+
+      <p class="hint">Tip: use the contract owner account when testing withdraw.</p>
+    </main>
+
+    <script src="./index-ts.ts" type="module"></script>
+  </body>
+</html>
