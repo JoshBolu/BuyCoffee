@@ -21,7 +21,10 @@
       <section class="controls" aria-label="Contract controls">
         <div class="row row-two">
           <button id="connectButton" type="button">Connect Wallet</button>
-          <button id="balanceButton" type="button">Get Balance</button>
+          <div class="button-output">
+            <button id="balanceButton" type="button">Get Balance</button>
+            <output id="balanceOutput" class="output"></output>
+          </div>
         </div>
 
         <div class="field">
@@ -32,6 +35,11 @@
         <div class="row row-two">
           <button id="fundButton" type="button">Buy Coffee</button>
           <button id="withdrawButton" type="button">Withdraw</button>
+        </div>
+
+        <div class="button-output">
+          <button id="getAddressToAmountFundedButton" type="button">Get Address to Amount Funded</button>
+          <output id="amountFundedOutput" class="output"></output>
         </div>
       </section>
 

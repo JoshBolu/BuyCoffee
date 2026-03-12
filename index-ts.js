@@ -44,6 +44,8 @@ var fundButton = document.getElementById("fundButton");
 var ethAmountInput = document.getElementById("ethAmount");
 var balanceButton = document.getElementById("balanceButton");
 var withdrawButton = document.getElementById("withdrawButton");
+var getAddressToAmountFundedButton = document.getElementById("getAddressToAmountFundedButton");
+console.log("Hiiii");
 var walletClient;
 var publicClient;
 function connect() {
@@ -171,6 +173,41 @@ function getBalance() {
         });
     });
 }
+function getAddressToAmountFunded() {
+    return __awaiter(this, void 0, void 0, function () {
+        var connectedAccount, currentChain, data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!(typeof window.ethereum !== "undefined")) return [3 /*break*/, 4];
+                    walletClient = (0, viem_1.createWalletClient)({
+                        transport: (0, viem_1.custom)(window.ethereum),
+                    });
+                    return [4 /*yield*/, walletClient.requestAddresses()];
+                case 1:
+                    connectedAccount = (_a.sent())[0];
+                    return [4 /*yield*/, getCurrentChain(walletClient)];
+                case 2:
+                    currentChain = _a.sent();
+                    publicClient = (0, viem_1.createPublicClient)({
+                        transport: (0, viem_1.custom)(window.ethereum),
+                    });
+                    return [4 /*yield*/, publicClient.readContract({
+                            address: constant_ts_1.contractAddress,
+                            abi: constant_ts_1.abi,
+                            functionName: "getAddressToAmountFunded",
+                            args: [connectedAccount],
+                            chain: currentChain,
+                        })];
+                case 3:
+                    data = _a.sent();
+                    console.log("Address ".concat(connectedAccount, " has funded ").concat((0, viem_1.formatEther)(data), " ETH"));
+                    _a.label = 4;
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
 function getCurrentChain(client) {
     return __awaiter(this, void 0, void 0, function () {
         var chainId, currentChain;
@@ -203,3 +240,4 @@ connectButton.onclick = connect;
 fundButton.onclick = fund;
 balanceButton.onclick = getBalance;
 withdrawButton.onclick = withdraw;
+getAddressToAmountFundedButton.onclick = getAddressToAmountFunded;

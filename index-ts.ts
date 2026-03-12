@@ -22,8 +22,11 @@ const balanceButton = document.getElementById(
 const withdrawButton = document.getElementById(
   "withdrawButton",
 ) as HTMLButtonElement;
-
-console.log("Hiiii");
+const getAddressToAmountFundedButton = document.getElementById(
+  "getAddressToAmountFundedButton",
+) as HTMLButtonElement;
+const balanceOutput = document.getElementById("balanceOutput") as HTMLOutputElement;
+const amountFundedOutput = document.getElementById("amountFundedOutput") as HTMLOutputElement;
 
 let walletClient: WalletClient;
 let publicClient: PublicClient;
@@ -100,7 +103,34 @@ async function getBalance(): Promise<void> {
     const balance = await publicClient.getBalance({
       address: contractAddress,
     });
-    console.log(`Contract balance: ${formatEther(balance)} ETH`);
+    balanceOutput.innerHTML = `${formatEther(balance)} ETH`;
+  } else {
+    balanceOutput.innerHTML = "Connect wallet first";
+  }
+}
+
+async function getAddressToAmountFunded(): Promise<void> {
+  if(typeof window.ethereum !== "undefined") {
+    walletClient = createWalletClient({
+      transport: custom(window.ethereum),
+    })
+    const [connectedAccount] = await walletClient.requestAddresses();
+    const currentChain = await getCurrentChain(walletClient);
+    
+    publicClient = createPublicClient({
+      transport: custom(window.ethereum),
+    });
+
+    const data = await publicClient.readContract({
+      address: contractAddress,
+      abi: abi,
+      functionName: "getAddressToAmountFunded",
+      args: [connectedAccount],
+      chain: currentChain,
+    });
+    amountFundedOutput.innerHTML = `${formatEther(data)} ETH`;
+  } else {
+    amountFundedOutput.innerHTML = "Connect wallet first";
   }
 }
 
@@ -130,3 +160,4 @@ connectButton.onclick = connect;
 fundButton.onclick = fund;
 balanceButton.onclick = getBalance;
 withdrawButton.onclick = withdraw;
+getAddressToAmountFundedButton.onclick = getAddressToAmountFunded;

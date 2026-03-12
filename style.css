@@ -155,10 +155,33 @@ button:active {
   transform: translateY(1px);
 }
 
+.button-output {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.output {
+  min-height: 1.5em;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.output:not(:empty) {
+  color: var(--accent);
+}
+
 #connectButton,
 #balanceButton {
   background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   color: #1b1b1b;
+}
+
+#getAddressToAmountFundedButton {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  border: 1px solid var(--panel-border);
 }
 
 #fundButton {
